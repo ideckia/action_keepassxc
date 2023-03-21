@@ -8,6 +8,8 @@ typedef Props = {
 	var database_path:String;
 	@:editable("Show entries from this folder (empty shows all entries)", "")
 	var database_root_folder:String;
+	@:editable("Load the password at the begining and keep them in memory", false)
+	var cache_passwords:Bool;
 	@:editable("Name of the parent directory", {
 		toDir: "_main_",
 		text: "back",
@@ -35,13 +37,18 @@ class KeePassXC extends IdeckiaAction {
 	var dynamicDir:DynamicDir;
 
 	override function init(initialState:ItemState):js.lib.Promise<ItemState> {
-		loadEntriesFromCSV().catchError(e -> server.log.error(e));
+		if (props.cache_passwords)
+			loadEntriesFromCSV().then(dynDir -> dynamicDir = dynDir).catchError(e -> server.log.error(e));
 		return super.init(initialState);
 	}
 
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
 		return new js.lib.Promise((resolve, reject) -> {
-			loadEntriesFromCSV().then(_ -> resolve(new ActionOutcome({directory: dynamicDir}))).catchError(e -> server.log.error(e));
+			loadEntriesFromCSV().then(dynDir -> {
+				if (props.cache_passwords)
+					dynamicDir = dynDir;
+				resolve(new ActionOutcome({directory: dynDir}));
+			}).catchError(e -> server.log.error(e));
 		});
 	}
 
@@ -63,8 +70,9 @@ class KeePassXC extends IdeckiaAction {
 				.then(resp -> {
 					switch resp {
 						case Some(v):
-							databasePassword = v.password;
-							resolve(databasePassword);
+							if (props.cache_passwords)
+								databasePassword = v.password;
+							resolve(v.password);
 						case None:
 							reject('No password provided');
 					}
@@ -72,10 +80,10 @@ class KeePassXC extends IdeckiaAction {
 		});
 	}
 
-	function loadEntriesFromCSV():js.lib.Promise<Bool> {
-		return new Promise<Bool>((resolve, reject) -> {
+	function loadEntriesFromCSV():js.lib.Promise<DynamicDir> {
+		return new Promise<DynamicDir>((resolve, reject) -> {
 			if (dynamicDir != null) {
-				resolve(true);
+				resolve(dynamicDir);
 				return;
 			}
 
@@ -178,12 +186,11 @@ class KeePassXC extends IdeckiaAction {
 								break;
 							columns++;
 						}
-						dynamicDir = {
+						resolve({
 							rows: rows,
 							columns: columns,
 							items: items
-						}
-						resolve(true);
+						});
 					}
 				});
 				cp.stderr.on('data', e -> error += e);
