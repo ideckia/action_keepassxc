@@ -10,6 +10,7 @@ Load all the password saved in the keepassxc database and creates an item for ea
 | ----- |----- | ----- | ----- | ----- | ----- |
 | database_path | String | The path to the database | false | null | null |
 | database_root_folder | String | Show entries from this folder (empty shows all entries) | false | "" | null |
+| cache_passwords | Bool | Load the password at the begining and keep them in memory | false | false | null |
 | parent_dir_state | { toDir : String, textSize : UInt, textPosition : api.TextPosition, textColor : String, text : String, icon : String, bgColor : String } | Name of the parent directory | false | { toDir : "_main_", text : "back", textSize : null, textColor : null, textPosition : null, icon : "folder", bgColor : "ffff0000" } | null |
 
 ## On single click
@@ -43,8 +44,17 @@ node test_action.js
             "name": "keepassxc",
             "props": {
                 "database_path": "/home/ideckia/passwords.kdbx",
-                    "database_root_folder": "",
-                    "parent_dir_state": { "toDir" : "_main_", "text" : "back", "textSize" : null, "textColor" : null, "textPosition" : null, "icon" : "folder", "bgColor" : "ffff0000" }
+                "database_root_folder": "",
+                "cache_passwords": true,
+                "parent_dir_state": {
+                    "toDir" : "_main_",
+                    "text" : "back",
+                    "textSize" : null,
+                    "textColor" : null,
+                    "textPosition" : null,
+                    "icon" : "folder",
+                    "bgColor" : "ffff0000"
+                }
             }
         }
     ]
