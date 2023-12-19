@@ -10,24 +10,6 @@ typedef Props = {
 	var database_root_folder:String;
 	@:editable("Load the password at the begining and keep them in memory", false)
 	var cache_passwords:Bool;
-	@:editable("Name of the parent directory", {
-		toDir: "_main_",
-		text: "back",
-		textSize: null,
-		textColor: null,
-		textPosition: null,
-		icon: "folder",
-		bgColor: "ffff0000"
-	})
-	var parent_dir_state:{
-		toDir:String,
-		text:String,
-		textSize:UInt,
-		textColor:String,
-		textPosition:TextPosition,
-		icon:String,
-		bgColor:String
-	};
 }
 
 @:name("keepassxc")
@@ -174,9 +156,6 @@ class KeePassXC extends IdeckiaAction {
 								]
 							});
 						}
-
-						if (props.parent_dir_state != null)
-							items.unshift(cast props.parent_dir_state);
 
 						var rows = 2;
 						var columns = 2;
