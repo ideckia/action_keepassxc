@@ -1,0 +1,34 @@
+[
+	{
+		"id": "action_description",
+		"text": "Load all the password saved in the keepassxc database and creates an item for each"
+	},
+	{
+		"id": "prop_database_path",
+		"text": "The path to the database"
+	},
+	{
+		"id": "prop_database_root_folder",
+		"text": "Show entries from this folder of the database (empty shows all entries)"
+	},
+	{
+		"id": "prop_cache_passwords",
+		"text": "Load the passwords at the begining and keep them in memory"
+	},
+	{
+		"id": "prop_group_text_size",
+		"text": "Percentage of the text size to show the [group] of the password."
+	},
+	{
+		"id": "prop_title_text_size",
+		"text": "Percentage of the text size to show the [title] of the password."
+	},
+	{
+		"id": "write_password_title",
+		"text": "KeepassXC file password"
+	},
+	{
+		"id": "write_password_body",
+		"text": "Write the KeePassXC [{0}] file password, please"
+	}
+]

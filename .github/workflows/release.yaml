@@ -38,6 +38,7 @@ jobs:
         mv index.js ${{ env.CMD_NAME }}
         mv presets.json ${{ env.CMD_NAME }}
         mv readme.md ${{ env.CMD_NAME }}
+        mv loc ${{ env.CMD_NAME }}
         echo '{"repository": "http://github.com/${{ github.repository }}","filename": "${{ env.CMD_NAME }}-${{ matrix.os }}.zip","version": "${{ github.ref_name }}"}' > ${{ env.CMD_NAME }}/.info
         zip -r ${{ env.CMD_NAME }} ${{ env.CMD_NAME }}
 

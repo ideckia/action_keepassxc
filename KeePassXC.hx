@@ -4,33 +4,50 @@ using api.IdeckiaApi;
 using StringTools;
 
 typedef Props = {
-	@:editable("The path to the database")
+	@:editable("prop_database_path")
 	var database_path:String;
-	@:editable("Show entries from this folder (empty shows all entries)", "")
+	@:editable("prop_database_root_folder", "")
 	var database_root_folder:String;
-	@:editable("Load the password at the begining and keep them in memory", false)
+	@:editable("prop_cache_passwords", false)
 	var cache_passwords:Bool;
+	@:editable("prop_group_text_size", 80)
+	var group_text_size_percent:UInt;
+	@:editable("prop_title_text_size", 90)
+	var title_text_size_percent:UInt;
 }
 
 @:name("keepassxc")
-@:description("Load all the password saved in the keepassxc database and creates an item for each")
+@:description("action_description")
+@:localize
 class KeePassXC extends IdeckiaAction {
 	var databasePassword:String = '';
 	var dynamicDir:DynamicDir;
 
 	override function init(initialState:ItemState):js.lib.Promise<ItemState> {
+		assertTextSizeProps();
 		if (props.cache_passwords)
-			loadEntriesFromCSV().then(dynDir -> dynamicDir = dynDir).catchError(e -> server.log.error(e));
+			loadEntriesFromCSV(initialState.textSize).then(dynDir -> dynamicDir = dynDir).catchError(e -> core.log.error(e));
 		return super.init(initialState);
+	}
+
+	function assertTextSizeProps() {
+		if (props.group_text_size_percent < 0)
+			props.group_text_size_percent = 0;
+		if (props.group_text_size_percent > 100)
+			props.group_text_size_percent = 100;
+		if (props.title_text_size_percent < 0)
+			props.title_text_size_percent = 0;
+		if (props.title_text_size_percent > 100)
+			props.title_text_size_percent = 100;
 	}
 
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
 		return new js.lib.Promise((resolve, reject) -> {
-			loadEntriesFromCSV().then(dynDir -> {
+			loadEntriesFromCSV(currentState.textSize).then(dynDir -> {
 				if (props.cache_passwords)
 					dynamicDir = dynDir;
 				resolve(new ActionOutcome({directory: dynDir}));
-			}).catchError(e -> server.log.error(e));
+			}).catchError(e -> core.log.error(e));
 		});
 	}
 
@@ -47,22 +64,20 @@ class KeePassXC extends IdeckiaAction {
 				return;
 			}
 
-			server.dialog.password('KeePassXC [${haxe.io.Path.withoutDirectory(props.database_path)}] file password',
-				'Write the KeePassXC [${props.database_path}] file password, please')
-				.then(resp -> {
-					switch resp {
-						case Some(v):
-							if (props.cache_passwords)
-								databasePassword = v.password;
-							resolve(v.password);
-						case None:
-							reject('No password provided');
-					}
-				});
+			core.dialog.password(Loc.write_password_title.tr(), Loc.write_password_body.tr([props.database_path])).then(resp -> {
+				switch resp {
+					case Some(v):
+						if (props.cache_passwords)
+							databasePassword = v.password;
+						resolve(v.password);
+					case None:
+						reject('No password provided');
+				}
+			});
 		});
 	}
 
-	function loadEntriesFromCSV():js.lib.Promise<DynamicDir> {
+	function loadEntriesFromCSV(textSize:UInt):js.lib.Promise<DynamicDir> {
 		return new Promise<DynamicDir>((resolve, reject) -> {
 			if (dynamicDir != null) {
 				resolve(dynamicDir);
@@ -111,7 +126,7 @@ class KeePassXC extends IdeckiaAction {
 
 						var separatorText = 'separator:';
 						var delayText = 'delay:';
-						var tokens, group, title, username, password, notes, entryName;
+						var tokens, group, title, username, password, notes;
 						var separator = '';
 						var delay = 0;
 						for (l in lines) {
@@ -140,9 +155,10 @@ class KeePassXC extends IdeckiaAction {
 								}
 							}
 
-							entryName = '$group/$title';
+							group = new RichString('$group/ ').size(textSize * (props.group_text_size_percent / 100));
+							title = new RichString(title).size(textSize * (props.title_text_size_percent / 100)).bold();
 							items.push({
-								text: entryName,
+								text: '$group$title',
 								actions: [
 									{
 										name: 'log-in',

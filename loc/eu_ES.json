@@ -1,0 +1,34 @@
+[
+	{
+		"id": "action_description",
+		"text": "KeepassXC datu-basean gordeta dauden pasahitz guztiak kargatu eta bakoitzeko item bat sortzen da"
+	},
+	{
+		"id": "prop_database_path",
+		"text": "Datu-basearen bidea"
+	},
+	{
+		"id": "prop_database_root_folder",
+		"text": "Datu-baseko karpeta honetako sarrerak bakarrik erakutsi (hutsik utzita denak erakutsiko dira)"
+	},
+	{
+		"id": "prop_cache_passwords",
+		"text": "Pasahitzak hasieratik kargatu eta memorian mantendu"
+	},
+	{
+		"id": "prop_group_text_size",
+		"text": "Pasahitzaren [taldearen] letra-tamainaren proportzioa ehunekotan."
+	},
+	{
+		"id": "prop_title_text_size",
+		"text": "Pasahitzaren [tituluaren] letra-tamainaren proportzioa ehunekotan."
+	},
+	{
+		"id": "write_password_title",
+		"text": "KeepassXC fitxategiaren pasahitza"
+	},
+	{
+		"id": "write_password_body",
+		"text": "Idatzi KeePassXC [{0}] fitxategiaren pasahitza, faborez"
+	}
+]
