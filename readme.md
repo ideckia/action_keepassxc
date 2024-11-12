@@ -2,16 +2,21 @@
 
 ## Description
 
-Load all the password saved in the keepassxc database and creates an item for each
+Load all the password saved in the KeePassXC database and creates an item for each.
+
+The default separator separator between username and password is `tab` and the delay is `0 ms`. But they can be configured for each entry in KeePassXC. To do that, you must define something like this in the notes of the entry you want to set those values:
+
+`separator:enter;delay:2000`
 
 ## Properties
 
 | Name | Type | Description | Shared | Default | Possible values |
 | ----- |----- | ----- | ----- | ----- | ----- |
 | database_path | String | The path to the database | false | null | null |
-| database_root_folder | String | Show entries from this folder (empty shows all entries) | false | "" | null |
-| cache_passwords | Bool | Load the password at the begining and keep them in memory | false | false | null |
-| parent_dir_state | { toDir : String, textSize : UInt, textPosition : api.TextPosition, textColor : String, text : String, icon : String, bgColor : String } | Name of the parent directory | false | { toDir : "_main_", text : "back", textSize : null, textColor : null, textPosition : null, icon : "folder", bgColor : "ffff0000" } | null |
+| database_root_folder | String | Show entries from this folder of the database (empty shows all entries) | false | "" | null |
+| cache_passwords | Bool | Load the passwords at the begining and keep them in memory | false | false | null |
+| group_text_size_percent | UInt | Percentage of the text size to show the [group] of the password. | false | 80 | null |
+| title_text_size_percent | UInt | Percentage of the text size to show the [title] of the password. | false | 90 | null |
 
 ## On single click
 
@@ -45,16 +50,9 @@ node test_action.js
             "props": {
                 "database_path": "/home/ideckia/passwords.kdbx",
                 "database_root_folder": "",
-                "cache_passwords": true,
-                "parent_dir_state": {
-                    "toDir" : "_main_",
-                    "text" : "back",
-                    "textSize" : null,
-                    "textColor" : null,
-                    "textPosition" : null,
-                    "icon" : "folder",
-                    "bgColor" : "ffff0000"
-                }
+                "cache_passwords": false,
+                "group_text_size_percent": 80,
+                "title_text_size_percent": 90
             }
         }
     ]
