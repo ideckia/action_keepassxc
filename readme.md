@@ -4,6 +4,8 @@
 
 Load all the password saved in the KeePassXC database and creates an item for each.
 
+Action ['action_log-in'](http://github.com/ideckia/action_log-in) is required.
+
 The default separator separator between username and password is `tab` and the delay is `0 ms`. But they can be configured for each entry in KeePassXC. To do that, you must define something like this in the notes of the entry you want to set those values:
 
 `separator:enter;delay:2000`
@@ -21,8 +23,6 @@ The default separator separator between username and password is `tab` and the d
 ## On single click
 
 Get entries from [KeePassXC](https://keepassxc.org/) application and creates a directory with an item for each entry.
-
-Action ['action_log-in'](http://github.com/ideckia/action_log-in) is required.
 
 When the action is initialized, it will get the entry content and will keep it in memory. If you want to reload the entry (if you have updated it), do it with a long press.
 
