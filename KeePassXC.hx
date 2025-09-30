@@ -143,6 +143,8 @@ class KeePassXC extends IdeckiaAction {
 								continue;
 
 							title = removeQuotes(tokens[titleIndex]);
+							if (title.startsWith('__'))
+								continue;
 							username = removeQuotes(tokens[usernameIndex]);
 							password = removeQuotes(tokens[passwordIndex]);
 							notes = removeQuotes(tokens[notesIndex]);
