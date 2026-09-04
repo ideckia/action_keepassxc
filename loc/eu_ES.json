@@ -1,7 +1,7 @@
 [
 	{
 		"id": "action_description",
-		"text": "KeepassXC datu-basean gordeta dauden pasahitz guztiak kargatu eta bakoitzeko item bat sortzen da"
+		"text": "KeePassXC datu-basean gordeta dauden pasahitz guztiak kargatu eta bakoitzeko item bat sortzen da"
 	},
 	{
 		"id": "prop_database_path",
@@ -25,10 +25,30 @@
 	},
 	{
 		"id": "write_password_title",
-		"text": "KeepassXC fitxategiaren pasahitza"
+		"text": "KeePassXC fitxategiaren pasahitza"
 	},
 	{
 		"id": "write_password_body",
 		"text": "Idatzi KeePassXC [{0}] fitxategiaren pasahitza, faborez"
+	},
+	{
+		"id": "error_dialog_title",
+		"text": "KeePassXC errorea"
+	},
+	{
+		"id": "no_password_provided",
+		"text": "Ez da pasahitzik eman"
+	},
+	{
+		"id": "error_cli_execution",
+		"text": "Errorea keepassxc-cli exekutatzean: [{0}]"
+	},
+	{
+		"id": "error_calling_cli",
+		"text": "keepassxc-cli deitzean errorea: [{0}]"
+	},
+	{
+		"id": "error_reading_db_wrong_pass",
+		"text": "KeePassXC [{0}] fitxategia irakurtzean errorea egon da. Pasahitz okerra sartu duzu, agian?"
 	}
 ]

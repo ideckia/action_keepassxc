@@ -1,7 +1,7 @@
 [
 	{
 		"id": "action_description",
-		"text": "Load all the password saved in the keepassxc database and creates an item for each"
+		"text": "Load all the password saved in the KeePassXC database and creates an item for each"
 	},
 	{
 		"id": "prop_database_path",
@@ -25,10 +25,30 @@
 	},
 	{
 		"id": "write_password_title",
-		"text": "KeepassXC file password"
+		"text": "KeePassXC file password"
 	},
 	{
 		"id": "write_password_body",
 		"text": "Write the KeePassXC [{0}] file password, please"
+	},
+	{
+		"id": "error_dialog_title",
+		"text": "KeePassXC error"
+	},
+	{
+		"id": "no_password_provided",
+		"text": "No password provided"
+	},
+	{
+		"id": "error_cli_execution",
+		"text": "Error in keepassxc-cli execution: [{0}]"
+	},
+	{
+		"id": "error_calling_cli",
+		"text": "Error calling keepassxc-cli: [{0}]"
+	},
+	{
+		"id": "error_reading_db_wrong_pass",
+		"text": "Error reading KeePassXC [{0}] file. Wrong password, maybe?"
 	}
 ]
